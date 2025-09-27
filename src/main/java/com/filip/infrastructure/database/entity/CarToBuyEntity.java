@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @EqualsAndHashCode(of="carToBuyId")
-@ToString(of={"carToBuyId","vin","brand","model","year"})
+@ToString(of={"carToServiceId","vin","brand","model","year"})
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -17,8 +17,9 @@ import java.math.BigDecimal;
 public class CarToBuyEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="car_to_buy_id")
-    private Integer carToBuyId;
+    private Integer carToServiceId;
 
 
     @Column(name="vin")
@@ -31,7 +32,7 @@ public class CarToBuyEntity {
     private String model;
 
     @Column(name="year")
-    private Integer year;
+    private Short year;
 
     @Column(name="color")
     private String color;

@@ -3,6 +3,8 @@ package com.filip.infrastructure.database.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Set;
+
 @Getter
 @Setter
 @EqualsAndHashCode(of="customer")
@@ -35,4 +37,10 @@ public class CustomerEntity {
     @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private AddressEntity address;
+
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "customer")
+    private Set<InvoiceEntity> invoices;
+
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "customer")
+    private Set<CarServiceRequestEntity> carServiceRequests;
 }

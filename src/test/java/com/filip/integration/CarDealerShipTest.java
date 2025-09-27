@@ -8,9 +8,8 @@ import org.junit.jupiter.api.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CarDealerShipTest {
 
-    @AfterAll(){
-        HibernateUtil.closeSessionFactory();
-    }
+    @AfterAll
+    static void afterAll(){HibernateUtil.closeSessionFactory();}
 
     @Test
     @Order(1)

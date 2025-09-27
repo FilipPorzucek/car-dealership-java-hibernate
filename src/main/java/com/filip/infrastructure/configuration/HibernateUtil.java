@@ -16,11 +16,10 @@ import java.util.Map;
 public class HibernateUtil {
     private static final Map<String,Object> HIBERNATE_SETTINGS=Map.ofEntries(
             Map.entry(Environment.DRIVER,"org.postgresql.Driver"),
-            Map.entry(Environment.URL, "jdbc:postgresql://localhost:5432/pet"),
+            Map.entry(Environment.URL, "jdbc:postgresql://localhost:5432/Car_DealerShip"),
             Map.entry(Environment.USER,"postgres"),
             Map.entry(Environment.PASS,"1234"),
             Map.entry(Environment.DIALECT,"org.hibernate.dialect.PostgreSQLDialect"),
-            Map.entry(Environment.CONNECTION_PROVIDER,"org.hibernate.hikaricp.internal.HikariCPConnectionProvider"),
             Map.entry(Environment.HBM2DDL_AUTO,"validate"),
             Map.entry(Environment.SHOW_SQL,true),
             Map.entry(Environment.FORMAT_SQL,false)
@@ -45,7 +44,7 @@ public class HibernateUtil {
                     .addAnnotatedClass(AddressEntity.class)
                     .addAnnotatedClass(CarServiceRequestEntity.class)
                     .addAnnotatedClass(CarToBuyEntity.class)
-                    .addAnnotatedClass(CarToService.class)
+                    .addAnnotatedClass(CarToServiceEntity.class)
                     .addAnnotatedClass(CustomerEntity.class)
                     .addAnnotatedClass(InvoiceEntity.class)
                     .addAnnotatedClass(MechanicEntity.class)

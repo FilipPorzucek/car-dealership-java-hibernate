@@ -5,34 +5,28 @@ import lombok.*;
 
 @Getter
 @Setter
-@EqualsAndHashCode(of="customer")
-@ToString(of={"customerId","name","surname","email"})
+@EqualsAndHashCode(of="servicePartId")
+@ToString(of={"servicePartId","quantity"})
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "customer")
+@Table(name = "service_part")
 public class ServicePartEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="customer_id")
-    private Integer customerId;
+    @Column(name="service_part_id")
+    private Integer servicePartId;
 
+    @Column(name = "quantity")
+    private Integer quantity;
 
-    @Column(name="name")
-    private String name;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "car_service_request_id")
+    private CarServiceRequestEntity carServiceRequest;
 
-    @Column(name="surname")
-    private String surname;
-
-    @Column(name="phone")
-    private String phone;
-
-    @Column(name="email")
-    private String email;
-
-    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_id")
-    private AddressEntity address;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "part_id")
+    private PartEntity part;
 
 }
