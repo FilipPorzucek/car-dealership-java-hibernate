@@ -1,8 +1,12 @@
 package com.filip.integration;
 
+import com.filip.business.managment.InputDataCash;
 import com.filip.infrastructure.configuration.HibernateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
+
+import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -15,6 +19,7 @@ public class CarDealerShipTest {
     @Order(1)
     void purge(){
     log.info("RUNNING ORDER 1");
+        Map<String, List<String>> inputData = InputDataCash.getInputData();
     }
 
     @Test
