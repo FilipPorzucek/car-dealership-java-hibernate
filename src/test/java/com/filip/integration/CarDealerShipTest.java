@@ -1,7 +1,10 @@
 package com.filip.integration;
 
+import com.filip.business.managment.CarDealerShipManagmentService;
+import com.filip.business.managment.FileDataPreparationService;
 import com.filip.business.managment.InputDataCash;
 import com.filip.infrastructure.configuration.HibernateUtil;
+import com.filip.infrastructure.database.repository.CarDealerShipMenagmentRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 
@@ -12,6 +15,15 @@ import java.util.Map;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CarDealerShipTest {
 
+    private CarDealerShipManagmentService carDealerShipManagmentService;
+    @BeforeEach
+    void beforeEach(){
+        this.carDealerShipManagmentService=new CarDealerShipManagmentService(
+        new CarDealerShipMenagmentRepository(),
+                new FileDataPreparationService()
+        );
+    }
+
     @AfterAll
     static void afterAll(){HibernateUtil.closeSessionFactory();}
 
@@ -19,7 +31,8 @@ public class CarDealerShipTest {
     @Order(1)
     void purge(){
     log.info("RUNNING ORDER 1");
-        Map<String, List<String>> inputData = InputDataCash.getInputData();
+        InputDataCash.getInputData();
+        carDealerShipManagmentService.purge();
     }
 
     @Test
