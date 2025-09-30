@@ -2,14 +2,11 @@ package com.filip.integration;
 
 import com.filip.business.managment.CarDealerShipManagmentService;
 import com.filip.business.managment.FileDataPreparationService;
-import com.filip.business.managment.InputDataCash;
+import com.filip.business.managment.InputDataCache;
 import com.filip.infrastructure.configuration.HibernateUtil;
 import com.filip.infrastructure.database.repository.CarDealerShipMenagmentRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
-
-import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -31,7 +28,6 @@ public class CarDealerShipTest {
     @Order(1)
     void purge(){
     log.info("RUNNING ORDER 1");
-        InputDataCash.getInputData();
         carDealerShipManagmentService.purge();
     }
 
@@ -39,6 +35,8 @@ public class CarDealerShipTest {
     @Order(2)
     void init(){
         log.info("RUNNING ORDER 2");
+        carDealerShipManagmentService.init();
+
     }
 
     @Test

@@ -3,11 +3,14 @@ package com.filip.business.managment;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.security.Key;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public final class InputDataCash {
+public final class InputDataCache {
 
         private static final String FILE_PATH="./src/main/resources/car-dealership-traffic-simulation.md";
 
@@ -37,7 +40,16 @@ public final class InputDataCash {
                 ));
     }
 
-   public static Map<String, List<String>> getInputData(){
-            return inputData;
+   public static <T> List<T> getInputData(
+           final Keys.InputDataGroup inputDataGroup,
+           final Keys.Entity entity,
+           final Function<String,T>mapper
+           ){
+            return Optional.ofNullable(inputData.get(inputDataGroup.toString()))
+                    .orElse(List.of())
+                    .stream()
+                    .filter(line->line.startsWith(entity.toString()))
+                    .map(mapper)
+                    .toList();
    }
 }
