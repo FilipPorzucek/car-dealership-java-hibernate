@@ -52,4 +52,15 @@ public final class InputDataCache {
                     .map(mapper)
                     .toList();
    }
+
+    public static <T> List<T> getInputData(
+            final Keys.InputDataGroup inputDataGroup,
+            final Function<String,T>mapper
+    ){
+        return Optional.ofNullable(inputData.get(inputDataGroup.toString()))
+                .orElse(List.of())
+                .stream()
+                .map(mapper)
+                .toList();
+    }
 }

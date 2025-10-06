@@ -1,5 +1,6 @@
 package com.filip.integration;
 
+import com.filip.business.CarPurchaseService;
 import com.filip.business.managment.CarDealerShipManagmentService;
 import com.filip.business.managment.FileDataPreparationService;
 import com.filip.business.managment.InputDataCache;
@@ -13,11 +14,16 @@ import org.junit.jupiter.api.*;
 public class CarDealerShipTest {
 
     private CarDealerShipManagmentService carDealerShipManagmentService;
+   private CarPurchaseService carPurchaseService;
     @BeforeEach
     void beforeEach(){
+        FileDataPreparationService fileDataPreparationService=new FileDataPreparationService();
         this.carDealerShipManagmentService=new CarDealerShipManagmentService(
         new CarDealerShipMenagmentRepository(),
-                new FileDataPreparationService()
+              fileDataPreparationService
+        );
+        this.carPurchaseService=new CarPurchaseService(
+               fileDataPreparationService
         );
     }
 
@@ -43,6 +49,8 @@ public class CarDealerShipTest {
     @Order(3)
     void purchase(){
         log.info("RUNNING ORDER 3");
+        carPurchaseService.purchase();
+
     }
 
     @Test

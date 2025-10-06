@@ -3,7 +3,9 @@ package com.filip.business.managment;
 public interface Keys {
 
     enum InputDataGroup{
-    INIT
+    INIT,
+        BUY_FIRST_TIME,
+        BUY_AGAIN
 
     }
     enum Entity{
