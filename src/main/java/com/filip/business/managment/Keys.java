@@ -13,7 +13,9 @@ public interface Keys {
         MECHANIC,
         CAR,
         SERVICE,
-        PART
+        PART,
+        CUSTOMER
+
     }
 
 }

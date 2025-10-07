@@ -4,11 +4,14 @@ import com.filip.business.managment.FileDataPreparationService;
 import com.filip.business.managment.Keys;
 import com.filip.infrastructure.database.entity.CarToBuyEntity;
 import com.filip.infrastructure.database.entity.CustomerEntity;
+import com.filip.infrastructure.database.entity.InvoiceEntity;
 import com.filip.infrastructure.database.entity.SalesmanEntity;
 import lombok.AllArgsConstructor;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @AllArgsConstructor
 public class CarPurchaseService {
@@ -35,10 +38,32 @@ public class CarPurchaseService {
 
     private Object createFirstTimeBuyCustomer(Map<String, List<String>> inputData) {
        CarToBuyEntity car= carService.findCarToBuy(inputData.get(Keys.Entity.CAR.toString()).get(0));
+     SalesmanEntity salesman=salesmanService.findSalesman(inputData.get(Keys.Entity.SALESMAN.toString()).get(0));
+    InvoiceEntity invoice= buildInvoice(car,salesman);
+
+
+    return fileDataPreparationService.buildCustomerEntity(inputData.get(Keys.Entity.CUSTOMER.toString()),invoice);
+
     }
 
-private Object createNextTimeBuyCustomer(Map<String, List<String>> inputData) {
-    return null;
-}
+    private CustomerEntity createNextTimeBuyCustomer(Map<String, List<String>> inputData) {
+       CustomerEntity existingCustomer=customerService.findCustomer(inputData.get(Keys.Entity.CUSTOMER.toString()).get(0));
+        CarToBuyEntity car= carService.findCarToBuy(inputData.get(Keys.Entity.CAR.toString()).get(0));
+        SalesmanEntity salesman=salesmanService.findSalesman(inputData.get(Keys.Entity.SALESMAN.toString()).get(0));
+        InvoiceEntity invoice=buildInvoice(car,salesman);
+        existingCustomer.getInvoices().add(invoice);
+        return existingCustomer;
+    }
+
+    private InvoiceEntity buildInvoice(CarToBuyEntity car, SalesmanEntity salesman) {
+        return InvoiceEntity.builder()
+                .invoiceNumber(UUID.randomUUID().toString())
+                .dateTime(OffsetDateTime.now())
+                .car(car)
+                .salesman(salesman)
+                .build();
+    }
+
+
 
 }
