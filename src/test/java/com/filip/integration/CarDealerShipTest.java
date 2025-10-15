@@ -1,11 +1,20 @@
 package com.filip.integration;
 
 import com.filip.business.CarPurchaseService;
+import com.filip.business.CarService;
+import com.filip.business.CustomerService;
+import com.filip.business.SalesmanService;
+import com.filip.business.dao.CarDao;
+import com.filip.business.dao.CustomerDao;
+import com.filip.business.dao.SalesmanDao;
 import com.filip.business.managment.CarDealerShipManagmentService;
 import com.filip.business.managment.FileDataPreparationService;
 import com.filip.business.managment.InputDataCache;
 import com.filip.infrastructure.configuration.HibernateUtil;
 import com.filip.infrastructure.database.repository.CarDealerShipMenagmentRepository;
+import com.filip.infrastructure.database.repository.CarRepository;
+import com.filip.infrastructure.database.repository.CustomerRepository;
+import com.filip.infrastructure.database.repository.SalesmanRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 
@@ -17,13 +26,20 @@ public class CarDealerShipTest {
    private CarPurchaseService carPurchaseService;
     @BeforeEach
     void beforeEach(){
+        CarDao carDao=new CarRepository();
+        SalesmanDao salesmanDao=new SalesmanRepository();
+        CustomerDao customerDao=new CustomerRepository();
+
         FileDataPreparationService fileDataPreparationService=new FileDataPreparationService();
         this.carDealerShipManagmentService=new CarDealerShipManagmentService(
         new CarDealerShipMenagmentRepository(),
               fileDataPreparationService
         );
         this.carPurchaseService=new CarPurchaseService(
-               fileDataPreparationService
+               fileDataPreparationService,
+                new CustomerService(customerDao),
+                new CarService(carDao),
+                new SalesmanService(salesmanDao)
         );
     }
 

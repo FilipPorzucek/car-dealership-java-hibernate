@@ -36,7 +36,7 @@ public class CarPurchaseService {
         nextTimeCustomers.forEach(customerService::issueInvoice);
 }
 
-    private Object createFirstTimeBuyCustomer(Map<String, List<String>> inputData) {
+    private CustomerEntity createFirstTimeBuyCustomer(Map<String, List<String>> inputData) {
        CarToBuyEntity car= carService.findCarToBuy(inputData.get(Keys.Entity.CAR.toString()).get(0));
      SalesmanEntity salesman=salesmanService.findSalesman(inputData.get(Keys.Entity.SALESMAN.toString()).get(0));
     InvoiceEntity invoice= buildInvoice(car,salesman);

@@ -8,6 +8,7 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.ParameterExpression;
 import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.hibernate.query.criteria.HibernateCriteriaBuilder;
 
 import java.util.Objects;
@@ -25,11 +26,21 @@ public class CarRepository implements CarDao {
             session.beginTransaction();
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             CriteriaQuery<CarToBuyEntity> criteriaQuery = criteriaBuilder.createQuery(CarToBuyEntity.class);
+            
             Root<CarToBuyEntity> root = criteriaQuery.from(CarToBuyEntity.class);
             ParameterExpression<String> parameter1 = criteriaBuilder.parameter(String.class);
-            criteriaQuery.select(root).where(criteriaBuilder.equal(root.get(vin),parameter1));
+            criteriaQuery.select(root).where(criteriaBuilder.equal(root.get("vin"),parameter1));
 
-            session.getTransaction().commit();
+            Query<CarToBuyEntity> query = session.createQuery(criteriaQuery);
+            query.setParameter(parameter1,vin);
+            try {
+                CarToBuyEntity result = query.getSingleResult();
+                session.getTransaction().commit();
+                return Optional.of(result);
+            } catch (Throwable ex){
+                return Optional.empty();
+            }
+
 
         }
     }
