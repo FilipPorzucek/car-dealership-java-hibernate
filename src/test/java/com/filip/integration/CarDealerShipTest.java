@@ -8,9 +8,11 @@ import com.filip.business.dao.CarDao;
 import com.filip.business.dao.CustomerDao;
 import com.filip.business.dao.SalesmanDao;
 import com.filip.business.managment.CarDealerShipManagmentService;
+import com.filip.business.managment.CarServiceRequestService;
 import com.filip.business.managment.FileDataPreparationService;
 import com.filip.business.managment.InputDataCache;
 import com.filip.infrastructure.configuration.HibernateUtil;
+import com.filip.infrastructure.database.entity.CarServiceRequestEntity;
 import com.filip.infrastructure.database.repository.CarDealerShipMenagmentRepository;
 import com.filip.infrastructure.database.repository.CarRepository;
 import com.filip.infrastructure.database.repository.CustomerRepository;
@@ -24,6 +26,7 @@ public class CarDealerShipTest {
 
     private CarDealerShipManagmentService carDealerShipManagmentService;
    private CarPurchaseService carPurchaseService;
+   private CarServiceRequestService carServiceRequestService;
     @BeforeEach
     void beforeEach(){
         CarDao carDao=new CarRepository();
@@ -73,6 +76,7 @@ public class CarDealerShipTest {
     @Order(4)
     void makeServiceRequest(){
         log.info("RUNNING ORDER 4");
+        carServiceRequestService.requestService();
     }
 
     @Test

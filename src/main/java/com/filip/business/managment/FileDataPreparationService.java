@@ -1,5 +1,6 @@
 package com.filip.business.managment;
 
+import com.filip.domain.CarServiceRequest;
 import com.filip.infrastructure.database.entity.*;
 
 import java.util.*;
@@ -40,6 +41,10 @@ public class FileDataPreparationService {
        return InputDataCache.getInputData(Keys.InputDataGroup.BUY_AGAIN, this::prepareMap);
     }
 
+    public List<CarServiceRequest> createCarServiceRequests() {
+        List<Map<String, List<String>>> inputData = InputDataCache.getInputData(Keys.InputDataGroup.SERVICE_REQUEST, this::prepareMap);
+    }
+
     private Map<String,List<String>> prepareMap(String line) {
         List<String> grouped = Arrays.stream(line.split("->")).map(String::trim).toList();
       return   IntStream.iterate(0, previous -> previous + 2)
@@ -64,4 +69,7 @@ public class FileDataPreparationService {
                  .invoices(Set.of(invoice))
                  .build();
     }
+
+
+
 }

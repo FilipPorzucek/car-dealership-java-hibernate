@@ -5,7 +5,8 @@ public interface Keys {
     enum InputDataGroup{
     INIT,
         BUY_FIRST_TIME,
-        BUY_AGAIN
+        BUY_AGAIN,
+        SERVICE_REQUEST
 
     }
     enum Entity{
