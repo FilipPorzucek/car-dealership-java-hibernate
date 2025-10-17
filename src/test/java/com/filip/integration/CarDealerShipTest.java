@@ -44,6 +44,9 @@ public class CarDealerShipTest {
                 new CarService(carDao),
                 new SalesmanService(salesmanDao)
         );
+        this.carServiceRequestService=new CarServiceRequestService(
+                fileDataPreparationService
+        );
     }
 
     @AfterAll

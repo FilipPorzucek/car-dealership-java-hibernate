@@ -1,9 +1,10 @@
 package com.filip.domain;
 
-import jakarta.persistence.Column;
 import lombok.Builder;
 import lombok.Value;
 import lombok.With;
+
+import java.util.Objects;
 
 @With
 @Value
@@ -48,6 +49,9 @@ public class CarServiceRequest {
         private String brand;
         private String model;
         private Short year;
+        public Boolean shouldExistInCarToBuy(){
+        return Objects.isNull(brand)&&Objects.isNull(model)&&Objects.isNull(year);
+        }
     }
 
 }

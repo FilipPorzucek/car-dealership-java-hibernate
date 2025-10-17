@@ -18,5 +18,8 @@ public interface Keys {
         CUSTOMER
 
     }
+    enum Constants{
+        WHAT
+    }
 
 }
