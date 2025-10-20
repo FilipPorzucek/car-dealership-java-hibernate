@@ -3,6 +3,8 @@ package com.filip.infrastructure.database.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Getter
@@ -43,4 +45,11 @@ public class CustomerEntity {
 
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "customer")
     private Set<CarServiceRequestEntity> carServiceRequests;
+
+    public void addServiceRequest(CarServiceRequestEntity carServiceRequestEntity) {
+        if(Objects.isNull(carServiceRequests)){
+            this.carServiceRequests=new HashSet<>();
+        }
+        carServiceRequests.add(carServiceRequestEntity);
+    }
 }

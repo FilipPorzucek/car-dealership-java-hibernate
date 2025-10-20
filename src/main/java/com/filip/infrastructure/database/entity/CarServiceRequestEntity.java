@@ -22,7 +22,7 @@ public class CarServiceRequestEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "car_service_request_id")
-    private Integer carServiceRequest;
+    private Integer carServiceRequestId;
 
     @Column(name="car_service_request_number",unique = true)
     private String carServiceRequestNumber;
