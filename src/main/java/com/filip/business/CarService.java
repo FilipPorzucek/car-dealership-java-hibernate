@@ -1,6 +1,8 @@
 package com.filip.business;
 
 import com.filip.business.dao.CarDao;
+import com.filip.domain.CarServiceRequest;
+import com.filip.infrastructure.database.entity.CarServiceRequestEntity;
 import com.filip.infrastructure.database.entity.CarToBuyEntity;
 import com.filip.infrastructure.database.entity.CarToServiceEntity;
 import lombok.AllArgsConstructor;
@@ -32,6 +34,16 @@ public class CarService {
                 .year(carToBuy.getYear())
                 .build();
 
+        return carDao.saveCarToService(entity);
+    }
+
+    public CarToServiceEntity saveCarToService(CarServiceRequest.Car car) {
+        CarToServiceEntity entity = CarToServiceEntity.builder()
+                .vin(car.getVin())
+                .brand(car.getBrand())
+                .model(car.getModel())
+                .year(car.getYear())
+                .build();
         return carDao.saveCarToService(entity);
     }
 }

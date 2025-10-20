@@ -67,4 +67,19 @@ public class CustomerRepository implements CustomerDao {
             session.getTransaction().commit();
         }
     }
+
+    @Override
+    public CustomerEntity saveCustomer(CustomerEntity entity) {
+        try (Session session = HibernateUtil.getSessionFactory()) {
+            if (Objects.isNull(session)) {
+                throw new RuntimeException("Session is null");
+            }
+            session.beginTransaction();
+            session.persist(entity);
+            session.getTransaction().commit();
+            return entity;
+        }
+    }
+
+
 }

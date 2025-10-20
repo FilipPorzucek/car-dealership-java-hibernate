@@ -32,8 +32,15 @@ public class CarServiceRequestService {
         serviceRequests.get(false).forEach(this::serviceRequestsForNewCar);
     }
 
-    private void serviceRequestsForNewCar(CarServiceRequest carServiceRequest) {
+    private void serviceRequestsForNewCar(CarServiceRequest request) {
 
+        CarToServiceEntity car = carService.saveCarToService(request.getCar());
+        CustomerEntity customer=customerService.saveCustomer(request.getCustomer());
+
+
+        CarServiceRequestEntity carServiceRequestEntity=buildCarServiceRequestEntity(request,car,customer);
+        customer.addServiceRequest(carServiceRequestEntity);
+        customerService.saveServiceRequest(customer);
 
     }
 

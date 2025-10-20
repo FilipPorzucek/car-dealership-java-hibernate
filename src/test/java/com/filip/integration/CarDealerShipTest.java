@@ -34,18 +34,22 @@ public class CarDealerShipTest {
         CustomerDao customerDao=new CustomerRepository();
 
         FileDataPreparationService fileDataPreparationService=new FileDataPreparationService();
+        CarService carService=new CarService(carDao);
+        CustomerService customerService=new CustomerService(customerDao);
         this.carDealerShipManagmentService=new CarDealerShipManagmentService(
         new CarDealerShipMenagmentRepository(),
               fileDataPreparationService
         );
         this.carPurchaseService=new CarPurchaseService(
                fileDataPreparationService,
-                new CustomerService(customerDao),
-                new CarService(carDao),
+                customerService,
+                carService,
                 new SalesmanService(salesmanDao)
         );
         this.carServiceRequestService=new CarServiceRequestService(
-                fileDataPreparationService
+                fileDataPreparationService,
+                carService,
+                customerService
         );
     }
 

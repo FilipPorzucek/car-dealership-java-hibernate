@@ -11,4 +11,6 @@ public interface CustomerDao {
     void issueInvoice(CustomerEntity customer);
 
     void saveServiceRequest(CustomerEntity customer);
+
+    CustomerEntity saveCustomer(CustomerEntity entity);
 }
