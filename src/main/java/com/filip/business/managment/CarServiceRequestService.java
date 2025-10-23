@@ -2,6 +2,7 @@ package com.filip.business.managment;
 
 import com.filip.business.CarService;
 import com.filip.business.CustomerService;
+import com.filip.business.dao.CarServiceRequestDao;
 import com.filip.domain.CarServiceRequest;
 import com.filip.infrastructure.database.entity.CarServiceRequestEntity;
 import com.filip.infrastructure.database.entity.CarToBuyEntity;
@@ -15,6 +16,7 @@ import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -23,6 +25,7 @@ public class CarServiceRequestService {
     private final FileDataPreparationService fileDataPreparationService;
     private final CarService carService;
     private final CustomerService customerService;
+    private final CarServiceRequestDao carServiceRequestDao;
 
     public void requestService() {
         Map<Boolean,List<CarServiceRequest>> serviceRequests = fileDataPreparationService.createCarServiceRequests().stream()
@@ -92,4 +95,17 @@ public class CarServiceRequestService {
         return new Random().nextInt(max-min)+max;
     }
 
+    public CarServiceRequestEntity findAnyActiveServiceRequest(String carVin) {
+       Set<CarServiceRequestEntity> serviceRequests=carServiceRequestDao.findActiveServiceRequestByCarVin(carVin);
+        if(serviceRequests.size()!=1){
+            throw new RuntimeException(
+                    "There should be only one active service request at a time,car vin: [%s].".formatted(carVin)
+            );
+        }
+        return serviceRequests.stream()
+                .findAny()
+                .orElseThrow(()->new RuntimeException(
+                        "Could not find any requests,car vin: [%s].".formatted(carVin)
+                ));
+    }
 }
