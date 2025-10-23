@@ -1,9 +1,6 @@
 package com.filip.integration;
 
-import com.filip.business.CarPurchaseService;
-import com.filip.business.CarService;
-import com.filip.business.CustomerService;
-import com.filip.business.SalesmanService;
+import com.filip.business.*;
 import com.filip.business.dao.CarDao;
 import com.filip.business.dao.CustomerDao;
 import com.filip.business.dao.SalesmanDao;
@@ -27,6 +24,7 @@ public class CarDealerShipTest {
     private CarDealerShipManagmentService carDealerShipManagmentService;
    private CarPurchaseService carPurchaseService;
    private CarServiceRequestService carServiceRequestService;
+   private CarServiceProcessingService carServiceProcessingService;
     @BeforeEach
     void beforeEach(){
         CarDao carDao=new CarRepository();
@@ -50,6 +48,9 @@ public class CarDealerShipTest {
                 fileDataPreparationService,
                 carService,
                 customerService
+        );
+        this.carServiceProcessingService=new CarServiceProcessingService(
+        fileDataPreparationService
         );
     }
 
@@ -90,6 +91,7 @@ public class CarDealerShipTest {
     @Order(5)
     void processServiceRequest(){
         log.info("RUNNING ORDER 5");
+        carServiceProcessingService.process();
     }
 
     @Test
